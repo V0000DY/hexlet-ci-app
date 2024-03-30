@@ -4,7 +4,13 @@ jobs:
    build:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@master
             - run: make setup
             - run: make test
             - run: make lint
+            - name: Run Snyk to check for vulnerabilities
+              uses: snyk/actions/node@master
+              env:
+                SNYK_TOKEN: ${{ secrets.SNYK_TOKEN}}
+            - name: Cache Primes
+              uses: actions/setup-node@v4
